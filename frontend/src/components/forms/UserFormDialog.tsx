@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema, type UserSchema } from "@/utils/userSchema";
 import { Button } from "@/components/ui/button";
-
 import {
   Dialog,
   DialogClose,
@@ -28,6 +27,7 @@ import {
 import { useDeleteUserMutate } from "@/hooks/useDeleteUserMutate";
 import { useCepData } from "@/hooks/useCepData";
 import { UserFormFields } from "./UserFormFields";
+import { DeleteDialog } from "./DeleteDialog";
 
 type UserFormDialogProps = {
   mode: "create" | "edit";
@@ -45,6 +45,7 @@ export const UserFormDialog = ({
   onOpenChange,
 }: UserFormDialogProps) => {
   const { mutate: deleteUser } = useDeleteUserMutate();
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const {
     register,
@@ -101,8 +102,9 @@ export const UserFormDialog = ({
   };
 
   const handleDelete = () => {
-    if (user && confirm("Tem certeza que deseja excluir este usuário?")) {
+    if (user) {
       deleteUser(user.id);
+      setConfirmDeleteOpen(false);
       onOpenChange?.(false);
     }
   };
@@ -133,7 +135,7 @@ export const UserFormDialog = ({
               <Button
                 type="button"
                 className="bg-red-600 text-white hover:bg-red-500"
-                onClick={handleDelete}
+                onClick={() => setConfirmDeleteOpen(true)}
               >
                 Excluir
               </Button>
@@ -155,6 +157,12 @@ export const UserFormDialog = ({
           </DialogFooter>
         </form>
       </DialogContent>
+
+      <DeleteDialog
+        open={confirmDeleteOpen}
+        onOpenChange={setConfirmDeleteOpen}
+        onConfirm={handleDelete}
+      />
     </Dialog>
   );
 };
