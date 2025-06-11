@@ -1,7 +1,5 @@
 # CepsearchApp
 
-## Descrição
-
 Este é um projeto desenvolvido com **Spring Boot** no backend e **React com Vite** no frontend. O objetivo é permitir que usuários consultem endereços a partir de um CEP via API ViaCEP, preencham seus dados e gerenciem essas informações com persistência em banco de dados SQL.
 
 
