@@ -12,7 +12,7 @@ function truncate(str: string, max: number) {
 }
 
 export const UserCard = ({ user, onEdit }: UserCardProps) => (
-  <Card className="mb-4 bg-gray-700 text-white border-gray-700 w-full max-w-md">
+    <Card className="mb-4 bg-gray-700 text-white border-gray-700 w-full">
     <CardHeader className="flex flex-row items-center justify-between gap-2">
       <CardTitle className="text-lg truncate max-w-[220px] flex-1 min-w-0">
         {truncate(user.name, 30)}
